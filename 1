@@ -1,0 +1,21 @@
+import requests
+
+def get_user_repositories(username):
+    url = f"https://api.github.com/users/{username}/repos"
+    response = requests.get(url)
+    if response.status_code == 200:
+        repositories = response.json()
+        return repositories
+    else:
+        print(f"Failed to fetch repositories for user {username}. Status code: {response.status_code}")
+        return None
+
+def create_repository(token, repo_name):
+    headers = {
+        "Authorization": f"token {token}",
+        "Accept": "application/vnd.github.v3+json"
+    }
+    data = {
+        "name": repo_name,
+        "auto_init": True
+    }
