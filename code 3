@@ -1,0 +1,27 @@
+response = requests.put(url, headers=headers, json=data)
+    if response.status_code == 201:
+        print(f"File '{file_path}' uploaded successfully to '{repo_name}'!")
+        return response.json()
+    else:
+        print(f"Failed to upload file '{file_path}' to repository '{repo_name}'. Status code: {response.status_code}")
+        return None
+
+# Замініть на свій токен
+token = "YOUR_GITHUB_TOKEN"
+username = "example_user"
+
+# Отримання репозиторіїв користувача
+repositories = get_user_repositories(username)
+if repositories:
+    print(f"Repositories for user {username}:")
+    for repo in repositories:
+        print(repo["name"])
+
+# Створення нового репозиторію
+new_repo_name = "new_repository"
+new_repo = create_repository(token, new_repo_name)
+
+# Завантаження файлу до існуючого репозиторію
+file_path = "example_folder/example_file.txt"
+file_content = "This is a test file."
+upload_file_to_repository(token, username, new_repo_name, file_path, file_content)
